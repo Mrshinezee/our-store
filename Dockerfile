@@ -1,12 +1,14 @@
 FROM node:14.0-alpine3.11
 
-WORKDIR /Users/shine/Documents/html/our-store
+WORKDIR /usr/app
 
-COPY package.json /Users/shine/Documents/html/our-store
+COPY package.json .
 
 RUN yarn install
 
 CMD [ "yarn", "start"]
 
-EXPOSE 7800
+COPY . .
+
+EXPOSE 3880
 
