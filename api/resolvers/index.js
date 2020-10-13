@@ -4,6 +4,6 @@ const customScalarResolver = {
     Date: GraphQLDateTime,
   };
 
-import customerResolver from './customer';
+import userResolver from './user';
 
-export default [customScalarResolver, customerResolver]
+export default [customScalarResolver, userResolver]

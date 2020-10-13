@@ -1,5 +1,5 @@
 import {gql} from 'apollo-server-express';
-import customerSchema from './customer';
+import userSchema from './user';
 
 const baseSchema =  gql`
 scalar Date
@@ -13,4 +13,4 @@ type Subscription {
   _: Boolean
 }
 `;
-export default [baseSchema, customerSchema]
+export default [baseSchema, userSchema]
