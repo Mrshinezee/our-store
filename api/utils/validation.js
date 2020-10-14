@@ -41,7 +41,35 @@ class UserValidation {
     return {
       error,
       isValid,
-      status: 'error'
+    };
+  }
+
+  /**
+   * @description method for validation of login input
+   * @param  {object} data  body of the user's request
+   * @returns {object} The body of the response message
+   */
+  static validateLoginInput(data) {
+    const error = {};
+    let isValid = false;
+
+    data.email = data.email ? data.email : '';
+    data.password = data.password ? data.password : '';
+
+
+    if (!(data.email)) {
+      error.email = 'Please enter your registered email';
+      isValid = true;
+    }
+
+    if (!(data.password)) {
+      error.password = 'Please enter your password';
+      isValid = true;
+    }
+
+    return {
+      error,
+      isValid,
     };
   }
 }
