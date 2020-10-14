@@ -67,5 +67,38 @@ export default {
 
       return { token: createToken(user, secret, '50m') };
     },
+    signIn: async (
+      parent,
+      { email, password },
+      { models, secret },
+    ) => {
+      const info = {
+        email,
+        password,
+      };
+
+      const { isValid } = UserValidation.validateLoginInput(info)
+
+      if (isValid) {
+        throw new UserInputError(
+          'Please provide a valid information',
+        );
+      }
+      const user = await models.User.findOne({ where: { email } });
+
+      if (!user) {
+        throw new UserInputError(
+          'No user found with this login credentials.',
+        );
+      }
+
+      const validatePassword = isValidPassword(user.password, password);
+
+      if (!validatePassword) {
+        throw new AuthenticationError('Invalid password.');
+      }
+
+      return { token: createToken(user, secret, '50m') };
+    },
   },
 }

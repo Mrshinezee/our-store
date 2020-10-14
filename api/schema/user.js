@@ -23,6 +23,7 @@ export default gql`
       email: String!
       password: String!
     ): Token!
+    signIn(email: String!, password: String!): Token!
   }
   `
   
