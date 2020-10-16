@@ -4,6 +4,8 @@ import { combineResolvers } from 'graphql-resolvers';
 import { AuthenticationError, UserInputError } from 'apollo-server';
 import { isAdmin, isAuthenticated} from './authorization'
 import UserValidation from '../utils/validation';
+import generateVerificationToken from '../utils/helpers/generateVerificationToken'
+import sendVerification from '../services/sendGrid'
 
 const createToken = async (user, secret, expiresIn) => {
   const { id, email, role } = user;
@@ -48,6 +50,7 @@ export default {
         email,
         password: hashPassword(password),
       };
+      const verificationToken = generateVerificationToken();
       const {error, isValid} = UserValidation.validateSignUpInput(newUser);
       if(isValid) {
         throw new UserInputError(
@@ -64,6 +67,7 @@ export default {
         ...newUser,
         role: "customer",
       });
+      sendVerification(email, verificationToken);
 
       return { token: createToken(user, secret, '50m') };
     },

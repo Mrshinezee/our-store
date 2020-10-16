@@ -35,6 +35,8 @@ const loggedInUser = async req => {
 
 const port = process.env.PORT || 3800;
 
+
+
 const server = new ApolloServer({
    introspection: true,
    typeDefs: schema,
