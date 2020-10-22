@@ -24,6 +24,6 @@ export default gql`
       password: String!
     ): Token!
     signIn(email: String!, password: String!): Token!
+    deleteUser(id: ID!): [User!]
   }
-  `
-  
+  `;
