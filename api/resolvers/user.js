@@ -89,14 +89,22 @@ export default {
           'No user found with this login credentials.',
         );
       }
-
       const validatePassword = isValidPassword(user.password, password);
-
       if (!validatePassword) {
         throw new AuthenticationError('Invalid password.');
       }
-
       return { token: createToken(user, secret, '50m') };
+    },
+    deleteUser: async (parents,
+      { id },
+      { models }) => {
+      await models.User.destroy({
+        where: {
+          id
+        }
+      });
+      const users = await models.User.findAll();
+      return users;
     },
   },
 };
