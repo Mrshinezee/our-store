@@ -89,14 +89,35 @@ export default {
           'No user found with this login credentials.',
         );
       }
-
       const validatePassword = isValidPassword(user.password, password);
-
       if (!validatePassword) {
         throw new AuthenticationError('Invalid password.');
       }
-
       return { token: createToken(user, secret, '50m') };
+    },
+    updateCustomer: async (parents,
+      {
+        id, firstName, lastName, postcode, phone, active, role
+      },
+      { models }) => {
+      await models.User.update({
+        firstName, lastName, postcode, phone, active, role
+      }, {
+        where: { id }
+      });
+      const updatedUser = await models.User.findOne({ where: { id } });
+      return updatedUser;
+    },
+    deleteUser: async (parents,
+      { id },
+      { models }) => {
+      await models.User.destroy({
+        where: {
+          id
+        }
+      });
+      const users = await models.User.findAll();
+      return users;
     },
   },
 };
