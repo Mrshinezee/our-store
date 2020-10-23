@@ -24,6 +24,15 @@ export default gql`
       password: String!
     ): Token!
     signIn(email: String!, password: String!): Token!
+    updateCustomer(
+      id: ID!
+      firstName: String
+      lastName: String
+      postcode: String
+      phone: Int
+      active: Boolean
+      role: String
+    ): User
     deleteUser(id: ID!): [User!]
   }
   `;

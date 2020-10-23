@@ -95,6 +95,19 @@ export default {
       }
       return { token: createToken(user, secret, '50m') };
     },
+    updateCustomer: async (parents,
+      {
+        id, firstName, lastName, postcode, phone, active, role
+      },
+      { models }) => {
+      await models.User.update({
+        firstName, lastName, postcode, phone, active, role
+      }, {
+        where: { id }
+      });
+      const updatedUser = await models.User.findOne({ where: { id } });
+      return updatedUser;
+    },
     deleteUser: async (parents,
       { id },
       { models }) => {
